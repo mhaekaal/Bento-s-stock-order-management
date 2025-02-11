@@ -1,13 +1,18 @@
+import os
 import streamlit as st
 import json
-import os
 from PIL import Image
 
-# Path ke file products.json
-PRODUCTS_JSON_PATH = os.path.join(os.path.dirname(__file__), 'data', 'products.json')
+# Path ke file products.json dan folder images
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # Direktori tempat app.py berada
+PRODUCTS_JSON_PATH = os.path.join(BASE_DIR, 'products.json')
+IMAGES_DIR = os.path.join(BASE_DIR, 'images')
 
 @st.cache_data
 def load_products():
+    if not os.path.exists(PRODUCTS_JSON_PATH):
+        st.error(f"File tidak ditemukan: {PRODUCTS_JSON_PATH}")
+        return []
     with open(PRODUCTS_JSON_PATH, 'r') as f:
         products = json.load(f)
     return products
@@ -31,7 +36,8 @@ def main():
             st.write(f"**{product['name']}**")
             st.write(f"Harga: Rp {product['price']:,}")
             st.write(f"Stok: {product['stock']}")
-            st.image(os.path.join('data', product['image']), width=150)
+            image_path = os.path.join(IMAGES_DIR, os.path.basename(product['image']))
+            st.image(image_path, width=150)
             st.write("---")
 
     elif menu == "Pesan Barang":
@@ -45,7 +51,8 @@ def main():
                 st.write(f"**{product['name']}**")
                 st.write(f"Harga: Rp {product['price']:,}")
                 st.write(f"Stok: {product['stock']}")
-                st.image(os.path.join('data', product['image']), width=150)
+                image_path = os.path.join(IMAGES_DIR, os.path.basename(product['image']))
+                st.image(image_path, width=150)
             with col2:
                 quantity = st.number_input(f"Jumlah {product['name']}", 0, product['stock'], key=product['id'])
                 if quantity > 0:
@@ -82,7 +89,7 @@ def main():
 
             if submitted:
                 if image is not None:
-                    image_path = os.path.join('data', 'images', image.name)
+                    image_path = os.path.join(IMAGES_DIR, image.name)
                     with open(image_path, "wb") as f:
                         f.write(image.getbuffer())
                     new_product = {
