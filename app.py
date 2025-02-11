@@ -3,15 +3,17 @@ import json
 import os
 from PIL import Image
 
-# Load product data
+# Path ke file products.json
+PRODUCTS_JSON_PATH = os.path.join(os.path.dirname(__file__), 'data', 'products.json')
+
 @st.cache_data
 def load_products():
-    with open('data/products.json', 'r') as f:
+    with open(PRODUCTS_JSON_PATH, 'r') as f:
         products = json.load(f)
     return products
 
 def save_products(products):
-    with open('data/products.json', 'w') as f:
+    with open(PRODUCTS_JSON_PATH, 'w') as f:
         json.dump(products, f, indent=4)
 
 def main():
