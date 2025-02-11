@@ -4,13 +4,13 @@
         "name": "Rendang",
         "price": 100000,
         "stock": 10,
-        "image": "https://static.promediateknologi.id/crop/0x0:0x0/0x0/webp/photo/p2/233/2024/04/28/Rendang-206972355.jpg"
+        "image": "images/product1.jpg"
     },
     {
         "id": 2,
         "name": "Nasi Goreng",
         "price": 150000,
         "stock": 5,
-        "image": "https://assets-a1.kompasiana.com/items/album/2023/06/12/nasi-goreng-indonesian-fried-rice-sugar-spice-more-6486e9184d498a53171a2c62.jpeg"
+        "image": "images/product2.jpg"
     }
 ]
